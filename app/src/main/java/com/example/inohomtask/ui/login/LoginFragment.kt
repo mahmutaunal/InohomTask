@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.inohomtask.R
 import com.example.inohomtask.databinding.FragmentLoginBinding
 import com.example.inohomtask.viewmodel.LoginViewModel
@@ -64,6 +66,8 @@ class LoginFragment : Fragment() {
                 R.string.toast_login_failed
             }
             Toast.makeText(requireContext(), getString(messageRes), Toast.LENGTH_SHORT).show()
+
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMenuFragment())
         }
     }
 

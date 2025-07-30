@@ -5,4 +5,21 @@
     <string name="toast_login_success">Giriş başarılı</string>
     <string name="toast_login_failed">Giriş başarısız</string>
     <string name="app_version_format">V.%1$s</string>
+    <string name="settings">Ayarlar</string>
+    <string name="inohom">inohom</string>
+    <string name="device_favorites">Favoriler</string>
+    <string name="device_lighting">Aydınlatma</string>
+    <string name="device_curtain">Perde</string>
+    <string name="device_socket">Priz</string>
+    <string name="device_scenario">Senaryo</string>
+    <string name="device_remote">Kumanda</string>
+    <string name="device_camera">Kamera</string>
+    <string name="device_alarm">Alarm</string>
+    <string name="device_intercom">Interkom</string>
+    <string name="device_system">Sistem</string>
+    <string name="device_heating">Isıtma</string>
+    <string name="device_air_conditioner">Klima</string>
+    <string name="device_sensor">Sensör</string>
+    <string name="device_site_management">Site Yönetimi</string>
+    <string name="device_concierge">Konşiyerj</string>
 </resources>
