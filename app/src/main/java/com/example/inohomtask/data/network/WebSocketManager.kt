@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 object WebSocketManager {
 
     private const val TAG = "WebSocketManager"
-    private const val SOCKET_URL = "ws://85.105.107.53:9095"
+    private const val SOCKET_URL = "ws://64.227.77.73:9095"
 
     private lateinit var client: OkHttpClient
     private var webSocket: WebSocket? = null
@@ -26,7 +26,8 @@ object WebSocketManager {
     fun connect() {
         if (::client.isInitialized.not()) {
             client = OkHttpClient.Builder()
-                .readTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
                 .build()
         }
 
@@ -57,7 +58,7 @@ object WebSocketManager {
             }
 
             override fun onFailure(ws: WebSocket, t: Throwable, response: Response?) {
-                Log.e(TAG, "WebSocket failure: ${t.message}")
+                Log.e(TAG, "WebSocket failure: ${t.message}", t)
                 listener?.onFailure(t)
             }
         })

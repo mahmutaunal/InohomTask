@@ -14,6 +14,9 @@ class LoginViewModel : ViewModel(), WebSocketManager.WebSocketListenerInterface 
     private val _loginSuccess = MutableLiveData<Boolean>()
     val loginSuccess: LiveData<Boolean> get() = _loginSuccess
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     private val gson = Gson()
 
     init {
@@ -25,6 +28,7 @@ class LoginViewModel : ViewModel(), WebSocketManager.WebSocketListenerInterface 
      * Sends an authentication request via WebSocket.
      */
     fun sendLogin(username: String, password: String) {
+        _isLoading.postValue(true)
         val request = mapOf(
             "is_request" to true,
             "id" to 8,
@@ -42,8 +46,10 @@ class LoginViewModel : ViewModel(), WebSocketManager.WebSocketListenerInterface 
         val jsonObject = gson.fromJson(message, Map::class.java)
 
         val method = jsonObject["method"] as? String
-        if (method == "OnAuthenticated") {
+        val id = (jsonObject["id"] as? Double)?.toInt()
+        if (method == "OnAuthenticated" && id == 8) {
             _loginSuccess.postValue(true)
+            _isLoading.postValue(false)
         }
     }
 
@@ -57,6 +63,7 @@ class LoginViewModel : ViewModel(), WebSocketManager.WebSocketListenerInterface 
 
     override fun onFailure(t: Throwable) {
         _loginSuccess.postValue(false)
+        _isLoading.postValue(false)
     }
 
     override fun onCleared() {

@@ -14,9 +14,24 @@
             android:id="@+id/action_loginFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.inohomtask.ui.menu.MenuFragment"
         android:label="menuFragment"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_controlListFragment"
+            app:destination="@id/controlListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/controlListFragment"
+        android:name="com.example.inohomtask.ui.control.ControlListFragment"
+        android:label="ControlListFragment"
+        tools:layout="@layout/fragment_control_list">
+        <argument
+            android:name="menu"
+            app:argType="com.example.inohomtask.data.model.Menu" />
+    </fragment>
 </navigation>

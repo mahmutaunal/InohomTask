@@ -13,6 +13,9 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.DeviceViewHolder>() {
 
     private val items = mutableListOf<Menu>()
 
+    // External click listener
+    var onItemClick: ((Menu) -> Unit)? = null
+
     fun submitList(newList: List<Menu>) {
         items.clear()
         items.addAll(newList)
@@ -23,8 +26,12 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.DeviceViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(menu: Menu) {
-            binding.ivDeviceIcon.setImageResource(menu.type.iconRes)
-            binding.tvDeviceName.setText(menu.type.nameRes)
+            binding.ivMenuIcon.setImageResource(menu.type.iconRes)
+            binding.tvMenuName.setText(menu.type.nameRes)
+
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(menu)
+            }
         }
     }
 

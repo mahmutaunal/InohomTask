@@ -22,4 +22,6 @@
     <string name="device_sensor">Sensör</string>
     <string name="device_site_management">Site Yönetimi</string>
     <string name="device_concierge">Konşiyerj</string>
+    <string name="not_implemented">Bu özellik henüz uygulanmadı.</string>
+    <string name="back">Geri</string>
 </resources>

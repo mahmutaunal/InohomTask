@@ -7,20 +7,21 @@
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/tbMenu"
+        android:id="@+id/tbControl"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/bg_tile_gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_toolbar"
-        app:title="@string/inohom"
+        app:menu="@menu/menu_control_list"
+        app:navigationIcon="@null"
+        app:title="@string/device_lighting"
         app:titleCentered="true"
         app:titleTextColor="@android:color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMenu"
+        android:id="@+id/rvDevices"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
@@ -28,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tbMenu"
+        app:layout_constraintTop_toBottomOf="@id/tbControl"
         app:spanCount="3"
         tools:itemCount="15"
         tools:listitem="@layout/item_menu" />

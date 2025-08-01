@@ -3,6 +3,7 @@ package com.example.inohomtask.data.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.inohomtask.R
+import java.io.Serializable
 
 /**
  * Enum representing static device types with icon and name.
@@ -10,7 +11,7 @@ import com.example.inohomtask.R
 enum class MenuType(
     @StringRes val nameRes: Int,
     @DrawableRes val iconRes: Int
-) {
+) : Serializable {
     FAVORITES(R.string.device_favorites, R.drawable.ic_star),
     LIGHTING(R.string.device_lighting, R.drawable.ic_lightbulb_off),
     CURTAIN(R.string.device_curtain, R.drawable.ic_blinds),

@@ -55,19 +55,25 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun setLoading(isLoading: Boolean) {
+        binding.buttonAccounts.isEnabled = !isLoading
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
     /**
      * Observes LiveData from the ViewModel.
      */
     private fun observeViewModel() {
-        viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
-            val messageRes = if (success) {
-                R.string.toast_login_success
-            } else {
-                R.string.toast_login_failed
-            }
-            Toast.makeText(requireContext(), getString(messageRes), Toast.LENGTH_SHORT).show()
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            setLoading(isLoading)
+        }
 
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMenuFragment())
+        viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMenuFragment())
+            } else {
+                Toast.makeText(requireContext(), requireContext().resources.getString(R.string.toast_login_failed), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
