@@ -9,13 +9,31 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <ImageView
-        android:id="@+id/ivDeviceIcon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_settings"
-        app:tint="@android:color/white"
-        tools:ignore="ContentDescription" />
+    <FrameLayout
+        android:id="@+id/flDeviceIconContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivDeviceIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_settings"
+            app:tint="@android:color/white"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/cpiDevice"
+            style="@style/Widget.Material3.CircularProgressIndicator"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/white"
+            app:indicatorSize="32dp"
+            app:trackThickness="3dp" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvDeviceName"

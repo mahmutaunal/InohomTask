@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inohomtask.R
 import com.example.inohomtask.databinding.FragmentLoginBinding
 import com.example.inohomtask.viewmodel.LoginViewModel
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 /**
  * Fragment for handling user login interaction.
@@ -51,13 +50,28 @@ class LoginFragment : Fragment() {
      */
     private fun setupListeners() {
         binding.buttonAccounts.setOnClickListener {
-            viewModel.sendLogin("demo", "123456")
+            viewModel.sendLogin("", "")
         }
     }
 
+    /**
+     * Updates the login button UI to reflect the loading state.
+     */
     private fun setLoading(isLoading: Boolean) {
-        binding.buttonAccounts.isEnabled = !isLoading
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        if (isLoading) {
+            val progressDrawable = CircularProgressIndicator(requireContext()).apply {
+                layoutParams = ViewGroup.LayoutParams(48, 48)
+                isIndeterminate = true
+            }
+
+            binding.buttonAccounts.icon = progressDrawable.indeterminateDrawable
+            binding.buttonAccounts.text = ""
+            binding.buttonAccounts.isEnabled = false
+        } else {
+            binding.buttonAccounts.icon = null
+            binding.buttonAccounts.text = getString(R.string.accounts)
+            binding.buttonAccounts.isEnabled = true
+        }
     }
 
     /**
@@ -69,11 +83,7 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
-            if (success) {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMenuFragment())
-            } else {
-                Toast.makeText(requireContext(), requireContext().resources.getString(R.string.toast_login_failed), Toast.LENGTH_SHORT).show()
-            }
+            if (success) findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMenuFragment())
         }
     }
 

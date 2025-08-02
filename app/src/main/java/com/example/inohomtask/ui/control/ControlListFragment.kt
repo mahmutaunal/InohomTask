@@ -1,18 +1,14 @@
 package com.example.inohomtask.ui.control
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.inohomtask.R
 import com.example.inohomtask.databinding.FragmentControlListBinding
 import com.example.inohomtask.viewmodel.ControlListViewModel
 
@@ -26,7 +22,7 @@ class ControlListFragment : Fragment() {
 
     private val viewModel: ControlListViewModel by viewModels()
     private val args: ControlListFragmentArgs by navArgs()
-    private lateinit var adapter: ControlAdapter
+    private lateinit var adapter: ControlListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,42 +41,26 @@ class ControlListFragment : Fragment() {
     /**
      * Configures the toolbar with:
      * - a dynamic title based on the selected menu type
-     * - a menu icon specific to the menu type
-     * - a custom back "Geri" text view to navigate back
      */
     private fun setupToolbar() {
         val toolbar = binding.tbControl
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val menu = args.menu
 
-        // Custom back button as text
-        val backTextView = TextView(requireContext()).apply {
-            text = getString(R.string.back)
-            setTextColor(Color.WHITE)
-            textSize = 16f
-            setPadding(24, 0, 24, 0)
-
-            setOnClickListener {
-                findNavController().navigateUp()
-            }
-        }
-
         // Set toolbar title and icon dynamically
         toolbar.title = getString(menu.type.nameRes)
-        toolbar.menu.clear()
-        toolbar.inflateMenu(R.menu.menu_control_list)
-        toolbar.addView(backTextView)
 
-        val item = toolbar.menu.findItem(R.id.action_control_list)
-        item?.icon = ContextCompat.getDrawable(requireContext(), menu.type.iconRes)
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     /**
      * Initializes the control adapter and handles item click events.
      */
     private fun setupAdapter() {
-        adapter = ControlAdapter()
+        adapter = ControlListAdapter()
         binding.rvDevices.adapter = adapter
 
         adapter.onItemClick = { device ->
@@ -92,8 +72,19 @@ class ControlListFragment : Fragment() {
      * Observes the LiveData from ViewModel and updates the device list in the adapter.
      */
     private fun observeViewModel() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.rvDevices.visibility = if (isLoading) View.GONE else View.VISIBLE
+        }
+
         viewModel.deviceList.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+            val updating = viewModel.updatingDeviceIds.value ?: emptySet()
+            adapter.submitList(list, updating)
+        }
+
+        viewModel.updatingDeviceIds.observe(viewLifecycleOwner) { updatingIds ->
+            val list = viewModel.deviceList.value ?: emptyList()
+            adapter.submitList(list, updatingIds)
         }
     }
 

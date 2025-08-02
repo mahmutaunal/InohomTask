@@ -2,8 +2,6 @@
     <string name="app_name">InohomTask</string>
     <string name="accounts">Hesaplar</string>
     <string name="inohom_plus">inohom+</string>
-    <string name="toast_login_success">Giriş başarılı</string>
-    <string name="toast_login_failed">Giriş başarısız</string>
     <string name="app_version_format">V.%1$s</string>
     <string name="settings">Ayarlar</string>
     <string name="inohom">inohom</string>

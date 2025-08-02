@@ -17,14 +17,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        makeSystemBarsTransparent()
+        setSystemBarsColor()
         setupNavController()
     }
 
     /**
-     * Makes the status bar and navigation bar fully transparent.
+     * Makes the status bar and navigation bar black.
      */
-    private fun makeSystemBarsTransparent() {
+    private fun setSystemBarsColor() {
         window.statusBarColor = getColor(R.color.black)
         window.navigationBarColor = getColor(R.color.black)
     }

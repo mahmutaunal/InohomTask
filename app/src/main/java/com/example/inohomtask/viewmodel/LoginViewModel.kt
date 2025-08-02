@@ -46,9 +46,11 @@ class LoginViewModel : ViewModel(), WebSocketManager.WebSocketListenerInterface 
         val jsonObject = gson.fromJson(message, Map::class.java)
 
         val method = jsonObject["method"] as? String
-        val id = (jsonObject["id"] as? Double)?.toInt()
-        if (method == "OnAuthenticated" && id == 8) {
+        if (method == "OnAuthenticated") {
             _loginSuccess.postValue(true)
+            _isLoading.postValue(false)
+        } else {
+            _loginSuccess.postValue(false)
             _isLoading.postValue(false)
         }
     }
