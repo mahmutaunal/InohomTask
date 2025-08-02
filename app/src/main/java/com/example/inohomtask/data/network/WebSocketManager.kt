@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 object WebSocketManager {
 
     private const val TAG = "WebSocketManager"
-    private const val SOCKET_URL = ""
+    private const val SOCKET_URL = "ws://64.227.77.73:9095/ws"
 
     private lateinit var client: OkHttpClient
     private var webSocket: WebSocket? = null

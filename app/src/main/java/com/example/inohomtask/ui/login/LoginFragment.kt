@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
      */
     private fun setupListeners() {
         binding.buttonAccounts.setOnClickListener {
-            viewModel.sendLogin("", "")
+            viewModel.sendLogin("admin", "admin")
         }
     }
 
